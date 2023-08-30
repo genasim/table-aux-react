@@ -1,6 +1,8 @@
 import React from 'react';
 
 import { tableData } from '../services/mock_constants';
+import Cell from './Cell';
+import Row from './Row';
 
 function MainPage() {
     const keys = Object.keys(tableData[0])
@@ -8,19 +10,13 @@ function MainPage() {
     const headers = keys.map((key, idx) => {
         return <th
             key={idx}
-            className='border p-5'>
+            className='border border-neutral-600 p-5 bg-neutral-400'>
             {key}
         </th>
     })
 
     const records = tableData.map((record, idx) => {
-        return (
-            <tr key={idx}>
-                {Object.keys(record).map((key, idx) => {
-                    return <td key={idx} className='border p-3'>{record[key]}</td>
-                })}
-            </tr>
-        )
+        return <Row key={idx} record={record} index={idx} />
     })
 
     return (
