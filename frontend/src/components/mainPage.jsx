@@ -1,12 +1,21 @@
 import React from 'react';
 
+import { useFetchDocsQuery } from '../features/apiSlice';
 import { tableData } from '../services/mock_constants';
-import Cell from './Cell';
 import Row from './Row';
 
 function MainPage() {
-    const keys = Object.keys(tableData[0])
+    const { data: docs, isSuccess, isLoading, isError, error } = useFetchDocsQuery()
 
+    if (isLoading) {
+        return <div>Loading ...</div>
+    }
+
+    if (isError || !isSuccess) {
+        return <div>{error}</div>
+    }
+
+    const keys = Object.keys(docs[0])
     const headers = keys.map((key, idx) => {
         return <th
             key={idx}
@@ -15,12 +24,12 @@ function MainPage() {
         </th>
     })
 
-    const records = tableData.map((record, idx) => {
+    const records = docs.map((record, idx) => {
         return <Row key={idx} record={record} index={idx} />
     })
 
     return (
-        <div className='flex justify-content'>
+        <div className='flex justify-content flex-col'>
             <table className="border-colapse border w-max">
                 <thead>
                     <tr>{headers}</tr>
