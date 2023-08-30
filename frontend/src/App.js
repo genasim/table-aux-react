@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 import MainPage from './components/mainPage';
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import { apiSlice } from './features/apiSlice';
 import { Provider } from 'react-redux';
 
