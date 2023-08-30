@@ -4,13 +4,13 @@ const connectionString = process.env.ATLAS_URI || "";
 
 const client = new MongoClient(connectionString);
 
-let conn;
+let connection;
 try {
-  conn = await client.connect();
+  connection = await client.connect();
 } catch(e) {
   console.error(e);
 }
 
-let db = conn.db("sample_training");
+const db = connection.db("sample_training");
 
 export default db;
