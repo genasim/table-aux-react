@@ -11,6 +11,6 @@ try {
   console.error(e);
 }
 
-const db = connection.db("sample_training");
+const db = connection.db("playground");
 
 export default db;
