@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { useFetchDocsQuery } from '../features/apiSlice';
-import { tableData } from '../services/mock_constants';
 import Row from './Row';
 
 function MainPage() {

@@ -8,8 +8,6 @@ const AUX_COLL = 'aux-react'
 
 // Get a list of all docs
 router.get("/", async (req, res) => {
-  console.warn(req.method);
-  
   try {
     let collection = await db.collection(AUX_COLL);
     let results = await collection.find({})
@@ -63,7 +61,7 @@ router.delete("/:id", async (req, res) => {
     res.send(result).status(200);
   } catch (error) {
     console.error(error);
-    res.send([]).status(500)
+    res.send(null).status(500)
   }
 });
 
