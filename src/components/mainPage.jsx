@@ -3,36 +3,34 @@ import React from 'react';
 import { tableData } from '../services/mock_constants';
 
 function MainPage() {
-    const headers = tableData.map((record, inx) => {
+    const keys = Object.keys(tableData[0])
 
+    const headers = keys.map((key, idx) => {
+        return <th
+            key={idx}
+            className='border p-5'>
+            {key}
+        </th>
+    })
+
+    const records = tableData.map((record, idx) => {
+        return (
+            <tr key={idx}>
+                {Object.keys(record).map((key, idx) => {
+                    return <td key={idx} className='border p-3'>{record[key]}</td>
+                })}
+            </tr>
+        )
     })
 
     return (
-        <div>
-            <table class="table-auto border-seperate border-slate-600 border flex justify-content">
+        <div className='flex justify-content'>
+            <table className="border-colapse border w-max">
                 <thead>
-                    <tr>
-                        <th className='border border-slate-600'>Song</th>
-                        <th className='border border-slate-600'>Artist</th>
-                        <th className='border border-slate-600'>Year</th>
-                    </tr>
+                    <tr>{headers}</tr>
                 </thead>
                 <tbody className=''>
-                    <tr>
-                        <td>The Sliding Mr. Bones (Next Stop, Pottersville)</td>
-                        <td>Malcolm Lockyer</td>
-                        <td>1961</td>
-                    </tr>
-                    <tr>
-                        <td>Witchy Woman</td>
-                        <td>The Eagles</td>
-                        <td>1972</td>
-                    </tr>
-                    <tr>
-                        <td>Shining Star</td>
-                        <td>Earth, Wind, and Fire</td>
-                        <td>1975</td>
-                    </tr>
+                    {records}
                 </tbody>
             </table>
         </div>

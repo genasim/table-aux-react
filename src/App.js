@@ -6,7 +6,7 @@ import MainPage from './components/mainPage';
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div className="App w-screen">
         <MainPage />
       </div>
     );
