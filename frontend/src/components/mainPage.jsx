@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useAddDocMutation, useFetchDocsQuery } from '../features/apiSlice';
-import { tableData } from '../services/mock_constants';
+import { getRandomRecord } from '../services/mock_constants';
 import Row from './Row';
 
 function MainPage() {
@@ -16,8 +16,19 @@ function MainPage() {
         return <div>{error}</div>
     }
 
+    const addDocButton = (
+        <button type='button' onClick={async () => await addDoc(getRandomRecord())}>
+            Add document
+        </button>
+    )
+
     if (docs.length === 0)
-        return <h1>There are no records in database to display :C</h1>
+        return (
+            <div>
+                {addDocButton}
+                <h1>There are no records in database to display :C</h1>
+            </div>
+        )
 
     const keys = Object.keys(docs[0])
     const headers = keys.map((key, idx) => {
@@ -34,6 +45,8 @@ function MainPage() {
 
     return (
         <div className='flex justify-content flex-col'>
+            {addDocButton}
+
             <table className="border-colapse border w-max">
                 <thead>
                     <tr>{headers}</tr>
@@ -42,9 +55,6 @@ function MainPage() {
                     {records}
                 </tbody>
             </table>
-            <button type='button' onClick={async () => await addDoc(tableData[4])}>
-                Add document
-            </button>
         </div>
     );
 }
