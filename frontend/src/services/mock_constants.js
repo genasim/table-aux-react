@@ -1,4 +1,15 @@
-export const tableData = [
+export const getRandomRecord = () => {
+    const idx = getRandomInt(0, tableData.length-1)
+    return tableData[idx]
+}
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+const tableData = [
     {
         id: 101,
         name: "John Smith",
@@ -9,7 +20,8 @@ export const tableData = [
         score2: 90,
         grade: "B",
         income: 45000,
-        city: "New York"
+        city: "New York",
+        marked: [],
     },
     {
         id: 102,
@@ -21,7 +33,8 @@ export const tableData = [
         score2: 88,
         grade: "B+",
         income: 55500,
-        city: "Los Angeles"
+        city: "Los Angeles",
+        marked: [],
     },
     {
         id: 103,
@@ -33,7 +46,8 @@ export const tableData = [
         score2: 95,
         grade: "A",
         income: 60200,
-        city: "Chicago"
+        city: "Chicago",
+        marked: [],
     },
     {
         id: 104,
@@ -45,7 +59,8 @@ export const tableData = [
         score2: 82,
         grade: "C",
         income: 38900,
-        city: "Houston"
+        city: "Houston",
+        marked: [],
     },
     {
         id: 105,
@@ -57,7 +72,8 @@ export const tableData = [
         score2: 91,
         grade: "A-",
         income: 72800,
-        city: "Miami"
+        city: "Miami",
+        marked: [],
     },
     {
         id: 106,
@@ -69,7 +85,8 @@ export const tableData = [
         score2: 85,
         grade: "B",
         income: 49600,
-        city: "San Francisco"
+        city: "San Francisco",
+        marked: [],
     },
     {
         id: 107,
@@ -81,7 +98,8 @@ export const tableData = [
         score2: 93,
         grade: "A",
         income: 68700,
-        city: "Seattle"
+        city: "Seattle",
+        marked: [],
     },
     {
         id: 108,
@@ -93,7 +111,8 @@ export const tableData = [
         score2: 88,
         grade: "B+",
         income: 53400,
-        city: "Boston"
+        city: "Boston",
+        marked: [],
     },
     {
         id: 109,
@@ -105,7 +124,8 @@ export const tableData = [
         score2: 80,
         grade: "C",
         income: 41300,
-        city: "Atlanta"
+        city: "Atlanta",
+        marked: [],
     },
     {
         id: 110,
@@ -117,6 +137,7 @@ export const tableData = [
         score2: 98,
         grade: "A+",
         income: 75600,
-        city: "Dallas"
+        city: "Dallas",
+        marked: [],
     },
 ]

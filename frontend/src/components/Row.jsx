@@ -1,17 +1,21 @@
 import React from 'react';
-import Cell from './Cell';
 import { useDeleteDocMutation } from '../features/apiSlice';
+import Cell from './Cell';
 
 function Row({ record, index }) {
     const [deleteDoc, { isLoading }] = useDeleteDocMutation()
 
-    const records = Object.keys(record).map((key, idx) => {
-        return <Cell key={idx} data={record[key]} />
-    })
+    const keys = Object.keys(record)
+    const records = keys
+        .slice(0, keys.length - 1)
+        .map((key, idx) => {
+            return <Cell key={idx + 1} value={record[key]} record={record} />
+        })
+
     const button = (
-        <td>
+        <td key={0}>
             <button
-                onClick={() => deleteDoc(record._id)}
+                onClick={async () => await deleteDoc(record._id)}
                 disabled={isLoading}
                 className='border border-rounded p-3 hover:bg-neutral-600'>
                 X

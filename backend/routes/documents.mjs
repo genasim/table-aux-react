@@ -35,11 +35,10 @@ router.get("/:id", async (req, res) => {
 });
 
 // Add a new document to the collection
-router.post("/postOne", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     let collection = await db.collection(AUX_COLL);
     let newDocument = req.body;
-    newDocument.date = new Date();
     let result = await collection.insertOne(newDocument);
 
     res.send(result).status(204);
@@ -56,7 +55,7 @@ router.delete("/:id", async (req, res) => {
     const query = { _id: ObjectId(req.params.id) };
 
     const collection = db.collection(AUX_COLL);
-    let result = await collection.deleteOne(query);
+    const result = await collection.deleteOne(query);
 
     res.send(result).status(200);
   } catch (error) {
@@ -64,5 +63,22 @@ router.delete("/:id", async (req, res) => {
     res.send(null).status(500)
   }
 });
+
+router.put('/:id', async (req, res) => {
+  try {
+    const query = { _id: ObjectId(req.params.id)}
+    const collection = db.collection(AUX_COLL)
+    
+    const body = req.body
+    const result = await collection.updateOne(query, {
+      $set: body
+    })
+
+    res.send(result).status(200)
+  } catch (error) {
+    console.error(error);
+    res.send(null).status(500)
+  }
+})
 
 export default router;
