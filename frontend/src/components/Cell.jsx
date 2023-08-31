@@ -11,8 +11,9 @@ function Cell({ value, record }) {
 
     const handleCellClick = async () => {
         const key = getKeyByValue(record, value)
-        const updatedDoc = { ...record, marked: [...record.marked, key] }
+        const markedSet = new Set([...record.marked, key])
 
+        const updatedDoc = { ...record, marked: [...markedSet] }
         await updateDocument(updatedDoc)
     }
 
