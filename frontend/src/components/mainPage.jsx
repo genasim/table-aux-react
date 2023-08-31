@@ -31,13 +31,15 @@ function MainPage() {
         )
 
     const keys = Object.keys(docs[0])
-    const headers = keys.map((key, idx) => {
-        return <th
-            key={idx}
-            className='border border-neutral-600 p-5 bg-neutral-400'>
-            {key}
-        </th>
-    })
+    const headers = keys
+        .slice(0, keys.length - 1)
+        .map((key, idx) => {
+            return <th
+                key={idx}
+                className='border border-neutral-600 p-5 bg-neutral-400'>
+                {key}
+            </th>
+        })
 
     const records = docs.map((record, idx) => {
         return <Row key={record._id} record={record} index={idx} />

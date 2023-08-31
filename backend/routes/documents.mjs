@@ -67,9 +67,12 @@ router.delete("/:id", async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const query = { _id: ObjectId(req.params.id)}
-    
     const collection = db.collection(AUX_COLL)
-    const result = await collection.updateOne(query)
+    
+    const body = req.body
+    const result = await collection.updateOne(query, {
+      $set: body
+    })
 
     res.send(result).status(200)
   } catch (error) {

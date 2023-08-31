@@ -9,28 +9,17 @@ function Cell({ value, record }) {
         return foundKey || null; // Value not found in the object
     }
 
-    const handleCellClick = () => {
-        if (record.marked === undefined) {
-            const key = getKeyByValue(record, value)
-            record.marked = [key]
-            updateDocument(record)
-            return
-        }
+    const handleCellClick = async () => {
+        const key = getKeyByValue(record, value)
+        const updatedDoc = { ...record, marked: [...record.marked, key] }
 
-
+        await updateDocument(updatedDoc)
     }
 
     return (
         <td
             className='border border-neutral-400 p-3 hover:bg-slate-300 hover:cursor-pointer'
-            onClick={() => {
-                handleCellClick()
-                console.log({
-                    record,
-                    key: getKeyByValue(record, value)
-                })
-            }
-            }>
+            onClick={handleCellClick}>
             {value}
         </td>
     );

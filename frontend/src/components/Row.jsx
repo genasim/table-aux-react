@@ -1,13 +1,17 @@
 import React from 'react';
+import { useDeleteDocMutation } from '../features/apiSlice';
 import Cell from './Cell';
-import { useDeleteDocMutation, useFetchDocsQuery } from '../features/apiSlice';
 
 function Row({ record, index }) {
     const [deleteDoc, { isLoading }] = useDeleteDocMutation()
 
-    const records = Object.keys(record).map((key, idx) => {
-        return <Cell key={idx+1} value={record[key]} record={record}/>
-    })
+    const keys = Object.keys(record)
+    const records = keys
+        .slice(0, keys.length - 1)
+        .map((key, idx) => {
+            return <Cell key={idx + 1} value={record[key]} record={record} />
+        })
+
     const button = (
         <td key={0}>
             <button

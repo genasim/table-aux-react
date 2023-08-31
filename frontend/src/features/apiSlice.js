@@ -18,10 +18,10 @@ export const apiSlice = createApi({
             invalidatesTags: ['Document']
         }),
         updateDoc: builder.mutation({
-            query: doc => ({
+            query: ({_id, ...rest}) => ({
                 url: `/${_id}`,
                 method: 'PUT',
-                body: doc
+                body: rest
             }),
             invalidatesTags: ['Document']
         }),
