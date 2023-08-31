@@ -1,30 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useUpdateDocMutation } from '../features/apiSlice';
 
-const getKeyByValue = (object, value) => {
-    const foundKey = Object.keys(object).find(key => object[key] === value);
-    return foundKey || null; // Value not found in the object
-}
-
-function Cell({ value, record }) {
+function Cell({ prop, value, record }) {
     const [updateDocument] = useUpdateDocMutation()
 
-    const [key, setKey] = useState(null)
     const [isMarked, setIsMarked] = useState(false)
 
     useEffect(() => {
-        const key = getKeyByValue(record, value)
-        setKey(key)
-
-        const marked = record.marked.includes(key)
+        const marked = record.marked === prop
         setIsMarked(marked)
-    }, [])
+    }, [record.marked])
 
     const handleCellClick = async () => {
-        const markedSet = new Set([...record.marked, key])
         setIsMarked(true)
 
-        const updatedDoc = { ...record, marked: [...markedSet] }
+        const updatedDoc = { ...record, marked: prop }
         await updateDocument(updatedDoc)
     }
 

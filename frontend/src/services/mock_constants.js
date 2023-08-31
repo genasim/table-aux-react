@@ -21,7 +21,7 @@ const tableData = [
         grade: "B",
         income: 45000,
         city: "New York",
-        marked: [],
+        marked: null,
     },
     {
         id: 102,
@@ -34,7 +34,7 @@ const tableData = [
         grade: "B+",
         income: 55500,
         city: "Los Angeles",
-        marked: [],
+        marked: null,
     },
     {
         id: 103,
@@ -47,7 +47,7 @@ const tableData = [
         grade: "A",
         income: 60200,
         city: "Chicago",
-        marked: [],
+        marked: null,
     },
     {
         id: 104,
@@ -60,7 +60,7 @@ const tableData = [
         grade: "C",
         income: 38900,
         city: "Houston",
-        marked: [],
+        marked: null,
     },
     {
         id: 105,
@@ -73,7 +73,7 @@ const tableData = [
         grade: "A-",
         income: 72800,
         city: "Miami",
-        marked: [],
+        marked: null,
     },
     {
         id: 106,
@@ -86,7 +86,7 @@ const tableData = [
         grade: "B",
         income: 49600,
         city: "San Francisco",
-        marked: [],
+        marked: null,
     },
     {
         id: 107,
@@ -99,7 +99,7 @@ const tableData = [
         grade: "A",
         income: 68700,
         city: "Seattle",
-        marked: [],
+        marked: null,
     },
     {
         id: 108,
@@ -112,7 +112,7 @@ const tableData = [
         grade: "B+",
         income: 53400,
         city: "Boston",
-        marked: [],
+        marked: null,
     },
     {
         id: 109,
@@ -125,7 +125,7 @@ const tableData = [
         grade: "C",
         income: 41300,
         city: "Atlanta",
-        marked: [],
+        marked: null,
     },
     {
         id: 110,
@@ -138,6 +138,6 @@ const tableData = [
         grade: "A+",
         income: 75600,
         city: "Dallas",
-        marked: [],
+        marked: null,
     },
 ]

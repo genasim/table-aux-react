@@ -9,7 +9,7 @@ function Row({ record, index }) {
     const records = keys
         .slice(0, keys.length - 1)
         .map((key, idx) => {
-            return <Cell key={idx + 1} value={record[key]} record={record} />
+            return <Cell key={idx + 1} prop={key} value={record[key]} record={record} />
         })
 
     const button = (
