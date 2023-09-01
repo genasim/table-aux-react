@@ -3,11 +3,19 @@ export const getRandomRecord = () => {
     return tableData[idx]
 }
 
+let key = -1
+export const getNewKey = () => {
+    key += 1
+    return key
+}
+
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+export const PAYMENT_ENUM = ['Pending', 'Approved', 'Declined', 'Refunded']
 
 const tableData = [
     {
@@ -22,6 +30,10 @@ const tableData = [
         income: 45000,
         city: "New York",
         marked: null,
+        status: {
+            original: 'Approved',
+            current: 'Approved',
+        },
     },
     {
         id: 102,
@@ -35,6 +47,10 @@ const tableData = [
         income: 55500,
         city: "Los Angeles",
         marked: null,
+        status: {
+            original: 'Declined',
+            current: 'Declined',
+        },
     },
     {
         id: 103,
@@ -48,6 +64,10 @@ const tableData = [
         income: 60200,
         city: "Chicago",
         marked: null,
+        status: {
+            original: 'Pending',
+            current: 'Pending',
+        },
     },
     {
         id: 104,
@@ -61,6 +81,10 @@ const tableData = [
         income: 38900,
         city: "Houston",
         marked: null,
+        status: {
+            original: 'Pending',
+            current: 'Pending',
+        },
     },
     {
         id: 105,
@@ -74,6 +98,10 @@ const tableData = [
         income: 72800,
         city: "Miami",
         marked: null,
+        status: {
+            original: 'Refunded',
+            current: 'Refunded',
+        },
     },
     {
         id: 106,
@@ -87,6 +115,10 @@ const tableData = [
         income: 49600,
         city: "San Francisco",
         marked: null,
+        status: {
+            original: 'Approved',
+            current: 'Approved',
+        },
     },
     {
         id: 107,
@@ -100,6 +132,10 @@ const tableData = [
         income: 68700,
         city: "Seattle",
         marked: null,
+        status: {
+            original: 'Refuned',
+            current: 'Refuned',
+        },
     },
     {
         id: 108,
@@ -113,6 +149,10 @@ const tableData = [
         income: 53400,
         city: "Boston",
         marked: null,
+        status: {
+            original: 'Pending',
+            current: 'Pending',
+        },
     },
     {
         id: 109,
@@ -126,6 +166,10 @@ const tableData = [
         income: 41300,
         city: "Atlanta",
         marked: null,
+        status: {
+            original: 'Declined',
+            current: 'Declined',
+        },
     },
     {
         id: 110,
@@ -139,5 +183,26 @@ const tableData = [
         income: 75600,
         city: "Dallas",
         marked: null,
+        status: {
+            original: 'Approved',
+            current: 'Approved',
+        },
+    },
+    {
+        id: 111,
+        name: "Alicia Siera",
+        age: 38,
+        height: 172,
+        weight: 62,
+        score1: 98,
+        score2: 80,
+        grade: "A",
+        income: 80340,
+        city: "Madrid",
+        marked: null,
+        status: {
+            original: 'Refunded',
+            current: 'Refunded',
+        },
     },
 ]

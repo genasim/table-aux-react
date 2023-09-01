@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useAddDocMutation, useFetchDocsQuery } from '../features/apiSlice';
-import { getRandomRecord } from '../services/mock_constants';
+import { getNewKey, getRandomRecord } from '../services/mock_constants';
 import Row from './Row';
 
 function MainPage() {
@@ -30,19 +30,21 @@ function MainPage() {
             </div>
         )
 
+
+    //  Generate Table Bellow
     const keys = Object.keys(docs[0])
     const headers = keys
-        .slice(0, keys.length - 1)
-        .map((key, idx) => {
+        .filter(key => key !== 'marked')
+        .map((key) => {
             return <th
-                key={idx}
+                key={getNewKey()}
                 className='border border-neutral-600 p-5 bg-neutral-400'>
                 {key}
             </th>
         })
 
     const records = docs.map((record, idx) => {
-        return <Row key={record._id} record={record} index={idx} />
+        return <Row key={getNewKey()} record={record} index={idx} />
     })
 
     return (
