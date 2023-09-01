@@ -20,34 +20,10 @@ function DropdownCell({ record }) {
         updateDocument(updatedDoc)
     }
 
-    const onButtonClick = () => {
-        const origOption = record.status.original
-
-        const updatedDoc = {
-            ...record,
-            marked: null,
-            status: {
-                original: origOption,
-                current: origOption,
-            }
-        }
-        updateDocument(updatedDoc)
-    }
-
-    const clearButton = (
-        <td key={getNewKey()}>
-            <button
-                onClick={onButtonClick}
-                className='border border-rounded p-3 hover:bg-neutral-600'>
-                X
-            </button>
-        </td>
-    )
-
     return (
-        <td className='flex'>
+        <td className='flex justify-center'>
             <select
-                className={`${record.status.original !== currOption ? 'hover:bg-green-500 bg-green-400' : 'hover:bg-slate-300'}`}
+                className={`p-3 hover:cursor-pointer ${record.status.original !== currOption ? 'hover:bg-green-500 bg-green-400' : 'hover:bg-slate-300'}`}
                 name="status-memu"
                 id="status-menu"
                 value={currOption}
@@ -56,7 +32,6 @@ function DropdownCell({ record }) {
                     <option key={getNewKey()} value={status}>{status}</option>
                 ))}
             </select>
-            {clearButton}
         </td>
     );
 }
