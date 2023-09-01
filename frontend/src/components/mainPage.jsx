@@ -13,7 +13,7 @@ function MainPage() {
     }
 
     if (isError || !isSuccess) {
-        return <div>{error}</div>
+        return <div>Failed to fetch data <br /> {error.error}</div>
     }
 
     const addDocButton = (

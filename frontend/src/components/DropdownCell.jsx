@@ -21,7 +21,7 @@ function DropdownCell({ record }) {
     }
 
     return (
-        <td className='flex justify-center'>
+        <td>
             <select
                 className={`p-3 hover:cursor-pointer ${record.status.original !== currOption ? 'hover:bg-green-500 bg-green-400' : 'hover:bg-slate-300'}`}
                 name="status-memu"
