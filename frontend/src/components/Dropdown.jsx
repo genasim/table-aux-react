@@ -20,4 +20,4 @@ function DropdownCell({ record }) {
     );
 }
 
-export default DropdownCell;
+export default React.memo(DropdownCell);
