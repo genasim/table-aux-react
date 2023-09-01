@@ -21,16 +21,6 @@ function Row({ record, index }) {
             return <Cell key={getNewKey()} prop={key} value={record[key]} record={record} />
         })
 
-    const clearButton = (
-        <td key={getNewKey()}>
-            <button
-                disabled={isLoading}
-                className='border border-rounded p-3 hover:bg-neutral-600'>
-                X
-            </button>
-        </td>
-    )
-
     const deleteButton = (
         <td key={getNewKey()}>
             <button
@@ -44,7 +34,7 @@ function Row({ record, index }) {
 
     return (
         <tr className={index % 2 === 0 ? 'bg-neutral-100' : 'bg-neutral-200'}>
-            {records.concat(clearButton, deleteButton)}
+            {records.concat(deleteButton)}
         </tr>
     );
 }

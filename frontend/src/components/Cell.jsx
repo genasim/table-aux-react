@@ -12,9 +12,6 @@ function Cell({ prop, value, record }) {
     }, [record.marked])
 
     const handleCellClick = async () => {
-        setIsMarked(true)
-        // record.marked = prop
-
         const updatedDoc = { ...record, marked: prop }
         await updateDocument(updatedDoc)
     }
