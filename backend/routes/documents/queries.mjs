@@ -28,3 +28,7 @@ export const unchanged_query = {
     }
   }
 }
+
+export const count_query = {
+  '$count': 'total'
+}
