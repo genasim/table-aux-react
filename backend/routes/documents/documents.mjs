@@ -10,32 +10,31 @@ const AUX_COLL = 'aux-react'
 // Get a list of all docs
 router.get("/", async (req, res) => {
   const { filter, page, size } = req.query
-  let filter_pipeline = []
-  //  Set default values in case if API testing
+  let filter_query = null
+  //  Set default values in case of API testing
   const paginate_query = paginate({
-    page: page != null ? page : 1,
-    size: size != null ? size : 10
+    page: page != null ? parseInt(page) : 1,
+    size: size != null ? parseInt(size) : 10
   })
 
   try {
     const collection = await db.collection(AUX_COLL);
 
     if (filter === 'marked') {
-      filter_pipeline = filter_pipeline.concat(marked_query)
+      filter_query = marked_query
     }
     else if (filter === 'unchanged') {
-      filter_pipeline = filter_pipeline.concat(unchanged_query)
+      filter_query = unchanged_query
     }
 
-    filter_pipeline = filter_pipeline.concat(paginate_query)
-
-    const [totalCount, filteredResults] = await Promise.all([
+    const [totalCount, filteredCount, filteredResults] = await Promise.all([
       collection.aggregate([count_query]).toArray(),
-      collection.aggregate(filter_pipeline).toArray()
+      collection.aggregate((filter_query ? [filter_query, count_query] : [count_query])).toArray(),
+      collection.aggregate([filter_query, ...paginate_query]).toArray()
     ])
     const respone = {
       totalCount: totalCount[0].total,
-      filteredCount: filteredResults.length,
+      filteredCount: filteredCount[0].total,
       results: filteredResults
     }
 
