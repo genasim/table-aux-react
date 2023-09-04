@@ -24,7 +24,7 @@ function Table() {
 
     const addDocButton = (
         <button
-            className='bg-neutral-300 border border-neutral-600 border-rounded m-3 px-4'
+            className='bg-neutral-300 border border-neutral-600 border-rounded my-10 px-4'
             type='button' onClick={async () => await addDoc(getRandomRecord())}>
             Add document
         </button>
@@ -83,17 +83,34 @@ function Table() {
                         <option value="marked">Marked</option>
                         <option value="unchanged">Unchanged</option>
                     </select>
+                    <span>Total results: {docs.filteredCount}</span>
                 </div>
 
 
-                <div>
-                    <label htmlFor="results-page">Page</label>
-                    <input
-                        className='bg-neutral-100 m-4 p-3 border border-neutral-400'
-                        id='results-page'
-                        value={page}
-                        onChange={onPageChange}
-                        type="number" />
+                <div className='flex flex-col'>
+                    <div>
+                        <label htmlFor="results-page">Page</label>
+                        <input
+                            className='bg-neutral-100 m-4 p-3 border border-neutral-400'
+                            id='results-page'
+                            value={page}
+                            onChange={onPageChange}
+                            type="number" />
+                        <span>/ {Math.ceil(docs.filteredCount / size)}</span>
+                    </div>
+                    <div>
+                        <label htmlFor="results-size">Page results</label>
+                        <select
+                        className='bg-neutral-100 mx-4 p-3 border border-neutral-400'
+                            onChange={(event) => setSize(event.target.value)}
+                            name="results-size"
+                            value={size}
+                            id="results-size">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
