@@ -1,7 +1,7 @@
 import express from "express";
 import { ObjectId } from "mongodb";
 import db from "../../db/conn.mjs";
-import { marked_query, unchanged_query } from "./queries.mjs"
+import { count_query, marked_query, paginate, unchanged_query } from "./queries.mjs"
 
 const router = express.Router();
 
@@ -9,23 +9,39 @@ const AUX_COLL = 'aux-react'
 
 // Get a list of all docs
 router.get("/", async (req, res) => {
-  const { filter } = req.query
-  let results = []
+  const { filter, page, size } = req.query
+  let filter_query = null
+  //  Set default values in case of API testing
+  const paginate_query = paginate({
+    page: page != null ? parseInt(page) : 1,
+    size: size != null ? parseInt(size) : 10
+  })
 
   try {
     const collection = await db.collection(AUX_COLL);
 
-    if (filter === 'all') {
-      results = await collection.find({}).toArray()
-    }
-    else if (filter === 'marked') {
-      results = await collection.aggregate([marked_query]).toArray()
+    if (filter === 'marked') {
+      filter_query = marked_query
     }
     else if (filter === 'unchanged') {
-      results = await collection.aggregate([unchanged_query]).toArray()
+      filter_query = unchanged_query
     }
 
-    res.send(results).status(200);
+    const count_filtered_query = filter_query ? [filter_query, count_query] : [count_query]
+    const filtered_paginated_query = filter_query ? [filter_query, ...paginate_query] : [...paginate_query]
+
+    const [totalCount, filteredCount, filteredResults] = await Promise.all([
+      collection.aggregate([count_query]).toArray(),
+      collection.aggregate(count_filtered_query).toArray(),
+      collection.aggregate(filtered_paginated_query).toArray()
+    ])
+    const respone = {
+      totalCount: totalCount[0].total,
+      filteredCount: filteredCount[0].total,
+      results: filteredResults
+    }
+
+    res.send(respone).status(200);
   } catch (error) {
     console.error(error);
     res.send([]).status(500)

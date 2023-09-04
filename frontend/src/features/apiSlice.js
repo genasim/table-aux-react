@@ -6,7 +6,7 @@ export const apiSlice = createApi({
     tagTypes: ['Document'],
     endpoints: (builder) => ({
         fetchDocs: builder.query({
-            query: (filter) => `/?filter=${filter}`,
+            query: ({ filter, page, size }) => `/?filter=${filter}&page=${page}&size=${size}`,
             providesTags: ['Document']
         }),
         addDoc: builder.mutation({
@@ -18,7 +18,7 @@ export const apiSlice = createApi({
             invalidatesTags: ['Document']
         }),
         updateDoc: builder.mutation({
-            query: ({_id, ...rest}) => ({
+            query: ({ _id, ...rest }) => ({
                 url: `/${_id}`,
                 method: 'PUT',
                 body: rest
