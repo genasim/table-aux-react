@@ -1,7 +1,7 @@
 import express from "express";
 import { ObjectId } from "mongodb";
 import db from "../../db/conn.mjs";
-import { marked_query, unchanged_query } from "./queries.mjs"
+import { marked_query, paginate, unchanged_query } from "./queries.mjs"
 
 const router = express.Router();
 
@@ -9,21 +9,24 @@ const AUX_COLL = 'aux-react'
 
 // Get a list of all docs
 router.get("/", async (req, res) => {
-  const { filter } = req.query
-  let results = []
+  const { filter, page, size } = req.query
+  let pipeline = []
+  const paginate_query = paginate({size, page})
 
   try {
     const collection = await db.collection(AUX_COLL);
 
-    if (filter === 'all') {
-      results = await collection.find({}).toArray()
+    if (filter === 'all' || filter == null) {
+      pipeline = pipeline.concat(paginate_query)
     }
     else if (filter === 'marked') {
-      results = await collection.aggregate([marked_query]).toArray()
+      pipeline = pipeline.concat(marked_query, paginate_query)
     }
     else if (filter === 'unchanged') {
-      results = await collection.aggregate([unchanged_query]).toArray()
+      pipeline = pipeline.concat(unchanged_query, paginate_query)
     }
+    
+    const results = await collection.aggregate(pipeline).toArray()
 
     res.send(results).status(200);
   } catch (error) {

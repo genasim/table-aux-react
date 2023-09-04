@@ -6,8 +6,9 @@ import Row from './Row';
 
 function Table() {
     const [filter, setFilter] = useState('all')
+    const [page, setPage] = useState(1)
 
-    const { data: docs, isSuccess, isLoading, isError, error } = useFetchDocsQuery(filter)
+    const { data: docs, isSuccess, isLoading, isError, error } = useFetchDocsQuery({filter, page, size: 10})
     const [addDoc] = useAddDocMutation()
 
     if (isLoading) {
