@@ -6,7 +6,7 @@ export const apiSlice = createApi({
     tagTypes: ['Document'],
     endpoints: (builder) => ({
         fetchDocs: builder.query({
-            query: () => '/',
+            query: (filter) => `/?filter=${filter}`,
             providesTags: ['Document']
         }),
         addDoc: builder.mutation({

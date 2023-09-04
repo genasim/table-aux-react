@@ -2,7 +2,7 @@ import cors from "cors";
 import express from "express";
 import "express-async-errors";
 import "./loadEnvironment.mjs";
-import documents from './routes/documents.mjs'
+import documents from './routes/documents/documents.mjs'
 
 const PORT = process.env.PORT || 5050;
 const app = express();

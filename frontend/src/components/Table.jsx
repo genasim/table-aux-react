@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useAddDocMutation, useFetchDocsQuery } from '../features/apiSlice';
 import { getNewKey, getRandomRecord } from '../services/mock_constants';
 import Row from './Row';
 
-function MainPage() {
-    const { data: docs, isSuccess, isLoading, isError, error } = useFetchDocsQuery()
+function Table() {
+    const [filter, setFilter] = useState('all')
+
+    const { data: docs, isSuccess, isLoading, isError, error } = useFetchDocsQuery(filter)
     const [addDoc] = useAddDocMutation()
 
     if (isLoading) {
@@ -13,11 +15,13 @@ function MainPage() {
     }
 
     if (isError || !isSuccess) {
-        return <div>Failed to fetch data <br /> {error.error}</div>
+        return <div>Failed to fetch data <br /> {error && ''}</div>
     }
 
     const addDocButton = (
-        <button type='button' onClick={async () => await addDoc(getRandomRecord())}>
+        <button
+            className='w-1/2'
+            type='button' onClick={async () => await addDoc(getRandomRecord())}>
             Add document
         </button>
     )
@@ -47,9 +51,25 @@ function MainPage() {
         return <Row key={getNewKey()} record={record} index={idx} />
     })
 
+    const onFilterChange = (event) => setFilter(event.target.value)
+
     return (
-        <div className='flex justify-content flex-col'>
+        <div className='flex flex-col'>
             {addDocButton}
+
+            <div className='w-2/5'>
+                <label htmlFor="table-filter">Filter results</label>
+                <select
+                    className='m-3 p-4 border border-slate-500'
+                    name="table-filter"
+                    id="table-filter"
+                    onChange={onFilterChange}
+                    value={filter}>
+                    <option value="all">All</option>
+                    <option value="marked">Marked</option>
+                    <option value="unchanged">Unchanged</option>
+                </select>
+            </div>
 
             <table className="border-colapse border w-max">
                 <thead>
@@ -63,4 +83,4 @@ function MainPage() {
     );
 }
 
-export default MainPage;
+export default Table;
