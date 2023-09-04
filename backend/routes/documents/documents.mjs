@@ -27,10 +27,13 @@ router.get("/", async (req, res) => {
       filter_query = unchanged_query
     }
 
+    const count_filtered_query = filter_query ? [filter_query, count_query] : [count_query]
+    const filtered_paginated_query = filter_query ? [filter_query, ...paginate_query] : [...paginate_query]
+
     const [totalCount, filteredCount, filteredResults] = await Promise.all([
       collection.aggregate([count_query]).toArray(),
-      collection.aggregate((filter_query ? [filter_query, count_query] : [count_query])).toArray(),
-      collection.aggregate([filter_query, ...paginate_query]).toArray()
+      collection.aggregate(count_filtered_query).toArray(),
+      collection.aggregate(filtered_paginated_query).toArray()
     ])
     const respone = {
       totalCount: totalCount[0].total,
