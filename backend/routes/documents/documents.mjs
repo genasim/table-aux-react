@@ -1,7 +1,7 @@
 import express from "express";
 import { ObjectId } from "mongodb";
 import db from "../../db/conn.mjs";
-import { marked_query, unchanged_query } from "./queries.js";
+import { marked_query, unchanged_query } from "./queries.mjs"
 
 const router = express.Router();
 
@@ -10,26 +10,20 @@ const AUX_COLL = 'aux-react'
 // Get a list of all docs
 router.get("/", async (req, res) => {
   const { filter } = req.query
-  let filterPipe
+  let results = []
 
   try {
     const collection = await db.collection(AUX_COLL);
 
-    if (filter === 'all')
-      filterPipe = []
-    else if (filter === 'marked')
-      filterPipe = marked_query
-    else if (filter === 'unchanged')
-      filterPipe = unchanged_query
-
-    const results = await collection.aggregate([
-      filterPipe,
-      {
-        '$set': { 'score': { '$meta': 'searchScore' } }
-      },
-      
-    ])
-      .toArray();
+    if (filter === 'all') {
+      results = await collection.find({}).toArray()
+    }
+    else if (filter === 'marked') {
+      results = await collection.aggregate([marked_query]).toArray()
+    }
+    else if (filter === 'unchanged') {
+      results = await collection.aggregate([unchanged_query]).toArray()
+    }
 
     res.send(results).status(200);
   } catch (error) {

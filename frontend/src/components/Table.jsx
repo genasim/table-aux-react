@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useAddDocMutation, useFetchDocsQuery } from '../features/apiSlice';
 import { getNewKey, getRandomRecord } from '../services/mock_constants';
 import Row from './Row';
 
-function MainPage() {
-    const { data: docs, isSuccess, isLoading, isError, error } = useFetchDocsQuery()
+function Table() {
+    const [filter, setFilter] = useState('unchanged')
+
+    const { data: docs, isSuccess, isLoading, isError, error } = useFetchDocsQuery(filter)
     const [addDoc] = useAddDocMutation()
 
     if (isLoading) {
@@ -47,9 +49,23 @@ function MainPage() {
         return <Row key={getNewKey()} record={record} index={idx} />
     })
 
+    const onFilterChange = (event) => setFilter(event.target.value);
     return (
         <div className='flex justify-content flex-col'>
             {addDocButton}
+
+            <div className='w-2/5'>
+                <label htmlFor="table-filter">Filter results</label>
+                <select
+                    name="table-filter"
+                    id="table-filter"
+                    onChange={onFilterChange}
+                    value={filter}>
+                    <option value="all">All</option>
+                    <option value="marked">Marked</option>
+                    <option value="unchanged">Unchanged</option>
+                </select>
+            </div>
 
             <table className="border-colapse border w-max">
                 <thead>
@@ -63,4 +79,4 @@ function MainPage() {
     );
 }
 
-export default MainPage;
+export default Table;

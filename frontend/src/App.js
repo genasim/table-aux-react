@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import MainPage from './components/mainPage';
+import Table from './components/Table';
 import { configureStore } from '@reduxjs/toolkit';
 import { apiSlice } from './features/apiSlice';
 import { Provider } from 'react-redux';
@@ -20,7 +20,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <div className="App w-screen">
-          <MainPage />
+          <Table />
         </div>
       </Provider>
     );
