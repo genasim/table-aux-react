@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { PAYMENT_ENUM, getNewKey } from '../services/mock_constants';
 import { useUpdateDocMutation } from '../features/apiSlice';
+import { PAYMENT_ENUM, getNewKey } from '../services/mock_constants';
 
 function DropdownCell({ record }) {
-    const [currOption, ] = useState(record.status.current)
+    const [currOption,] = useState(record.status.current)
     const [updateDocument] = useUpdateDocMutation()
 
     const onOptionChange = (event) => {
@@ -21,7 +21,7 @@ function DropdownCell({ record }) {
     }
 
     return (
-        <td>
+        <td className='border border-neutral-400'>
             <select
                 className={`p-3 hover:cursor-pointer ${record.status.original !== currOption ? 'hover:bg-green-500 bg-green-400' : 'hover:bg-slate-300'}`}
                 name="status-memu"

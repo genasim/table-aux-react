@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useAddDocMutation, useFetchDocsQuery } from '../features/apiSlice';
 import { getNewKey, getRandomRecord } from '../services/mock_constants';
 import Row from './Row';
 
 function Table() {
-    const [filter, setFilter] = useState('unchanged')
+    const [filter, setFilter] = useState('all')
 
-    const { data: docs, isSuccess, isLoading, isError, error } = useFetchDocsQuery(filter)
+    const { data: docs, isSuccess, isLoading, isError, error, refetch } = useFetchDocsQuery(filter)
     const [addDoc] = useAddDocMutation()
 
     if (isLoading) {
@@ -15,7 +15,7 @@ function Table() {
     }
 
     if (isError || !isSuccess) {
-        return <div>Failed to fetch data <br /> {error.error}</div>
+        return <div>Failed to fetch data <br /> {error && ''}</div>
     }
 
     const addDocButton = (
@@ -49,7 +49,8 @@ function Table() {
         return <Row key={getNewKey()} record={record} index={idx} />
     })
 
-    const onFilterChange = (event) => setFilter(event.target.value);
+    const onFilterChange = (event) => setFilter(event.target.value)
+
     return (
         <div className='flex justify-content flex-col'>
             {addDocButton}
@@ -57,6 +58,7 @@ function Table() {
             <div className='w-2/5'>
                 <label htmlFor="table-filter">Filter results</label>
                 <select
+                    className='m-3 p-4 border border-slate-500'
                     name="table-filter"
                     id="table-filter"
                     onChange={onFilterChange}
